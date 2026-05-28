@@ -1,60 +1,62 @@
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test2Login {
     @Test
-    void test01() {
+    void test01UspeshniyloginUspeshniyParol() {
         open("https://www.saucedemo.com/");
-        sleep(2000);
         $("#user-name").should(exist);
         $("#user-name").setValue("visual_user");
-        sleep(2000);
         $("#password").setValue("secret_sauce");
         $("#login-button").click();
-        sleep(10000);
+        $(".title").should(exist);
+        $(".title").should(text("Products"));
 
 
     }
     @Test
 
-    void test02() {
+    void test02UspeshniyloginNeuspeshniyParol() {
         open("https://www.saucedemo.com/");
-        sleep(2000);
         $("#user-name").should(exist);
         $("#user-name").setValue("visual_user");
-        sleep(2000);
         $("#password").setValue("secret_sauce1");
         $("#login-button").click();
-        sleep(10000);
+        $(".error-message-container").should(exist);
+        $(".error-message-container").should(text("Epic sadface: Username and password do not match any user in this service"));
+
 
     }
     @Test
-    void test03() {
+    void test03PustiyePolya() {
         open("https://www.saucedemo.com/");
-        sleep(2000);
         $("#login-button").click();
-        sleep(10000);
+        $(".error-message-container").should(exist);
+        $(".error-message-container").should(text("Epic sadface: Username is required"));
+
     }
     @Test
-    void test04() {
+    void test04UspeshniyloginPustoyParol() {
         open("https://www.saucedemo.com/");
-        sleep(2000);
-        $("user-name").should(exist);
-        $("user-name").setValue("locked_out_user");
-        sleep(2000);
-        $("#login-button").click();
-        sleep(10000);
-    }
-    @Test
-    void test05() {
-        open("https://www.saucedemo.com/");
-        sleep(2000);
         $("#user-name").should(exist);
-        $("#user-name").setValue("problem_user");
-        sleep(2000);
+        $("#user-name").setValue("standard_user");
         $("#login-button").click();
-        sleep(10000);
+        $(".error-message-container").should(exist);
+        $(".error-message-container").should(text("Epic sadface: Password is required"));
+
+    }
+    @Test
+    void test05ZablokirovanniyLogin() {
+        open("https://www.saucedemo.com/");
+        $("#user-name").should(exist);
+        $("#user-name").setValue("locked_out_user");
+        $("#password").setValue("secret_sauce");
+        $("#login-button").click();
+        $(".error-message-container").should(exist);
+        $(".error-message-container").should(text("Epic sadface: Sorry, this user has been locked out."));
+
     }
 }
