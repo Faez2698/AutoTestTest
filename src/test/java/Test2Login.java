@@ -5,6 +5,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test2Login {
+    //Проверяем успешный вход
     @Test
     void test01UspeshniyloginUspeshniyParol() {
         open("https://www.saucedemo.com/");
